@@ -14,7 +14,89 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      chat_messages: {
+        Row: {
+          context_used: Json | null
+          created_at: string
+          id: string
+          message: string
+          sender: string
+          session_id: string | null
+        }
+        Insert: {
+          context_used?: Json | null
+          created_at?: string
+          id?: string
+          message: string
+          sender: string
+          session_id?: string | null
+        }
+        Update: {
+          context_used?: Json | null
+          created_at?: string
+          id?: string
+          message?: string
+          sender?: string
+          session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "chat_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_sessions: {
+        Row: {
+          created_at: string
+          id: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      medical_qa: {
+        Row: {
+          created_at: string
+          doctor_response: string
+          id: string
+          patient_description: string | null
+          question: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          doctor_response: string
+          id?: string
+          patient_description?: string | null
+          question: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          doctor_response?: string
+          id?: string
+          patient_description?: string | null
+          question?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -1,29 +1,59 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/layout/Header";
 import { ArrowLeft, Send, Mic, Phone, MessageCircle, User, Bot } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface Message {
   id: string;
   text: string;
   sender: 'user' | 'bot';
   timestamp: Date;
+  contextUsed?: number;
 }
 
 const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Hello! I'm CareConnect AI, your personal health assistant. How can I help you today?",
+      text: "Hello! I'm CareConnect AI, your personal health assistant. I have access to medical knowledge and can help answer your health questions. How can I help you today?",
       sender: 'bot',
       timestamp: new Date()
     }
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  // Initialize chat session
+  useEffect(() => {
+    const initializeSession = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('chat_sessions')
+          .insert([{ user_id: 'anonymous' }])
+          .select()
+          .single();
+
+        if (error) throw error;
+        setSessionId(data.id);
+      } catch (error) {
+        console.error('Error creating session:', error);
+        toast({
+          title: "Session Error",
+          description: "Failed to initialize chat session. Some features may not work.",
+          variant: "destructive",
+        });
+      }
+    };
+
+    initializeSession();
+  }, [toast]);
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
@@ -36,20 +66,58 @@ const Chatbot = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const currentInput = input;
     setInput("");
     setIsTyping(true);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      // Call the medical chat edge function
+      const { data, error } = await supabase.functions.invoke('medical-chat', {
+        body: { 
+          message: currentInput,
+          sessionId: sessionId 
+        }
+      });
+
+      if (error) throw error;
+
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: "Thank you for your message. I understand you're looking for health guidance. Based on your query, I'd recommend consulting with a healthcare professional for a proper assessment. In the meantime, here are some general health tips that might help...",
+        text: data.response || "I apologize, but I'm having trouble processing your request. Please consult with a healthcare professional.",
+        sender: 'bot',
+        timestamp: new Date(),
+        contextUsed: data.contextUsed || 0
+      };
+
+      setMessages(prev => [...prev, botResponse]);
+      
+      if (data.contextUsed > 0) {
+        toast({
+          title: "Enhanced Response",
+          description: `Found ${data.contextUsed} relevant medical cases to help answer your question.`,
+        });
+      }
+
+    } catch (error) {
+      console.error('Error calling medical chat:', error);
+      
+      const errorResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "I'm sorry, I'm experiencing technical difficulties right now. Please try again later or consult with a healthcare professional for immediate medical concerns.",
         sender: 'bot',
         timestamp: new Date()
       };
-      setMessages(prev => [...prev, botResponse]);
+      
+      setMessages(prev => [...prev, errorResponse]);
+      
+      toast({
+        title: "Connection Error",
+        description: "Unable to connect to AI service. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
       setIsTyping(false);
-    }, 2000);
+    }
   };
 
   return (
@@ -114,9 +182,12 @@ const Chatbot = () => {
                         : 'glass-card'
                     }`}
                   >
-                    <p className="text-sm">{message.text}</p>
-                    <div className="text-xs opacity-70 mt-1">
-                      {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    <p className="text-sm whitespace-pre-wrap">{message.text}</p>
+                    <div className="flex items-center justify-between text-xs opacity-70 mt-1">
+                      <span>{message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                      {message.contextUsed && message.contextUsed > 0 && (
+                        <span className="text-primary">📚 {message.contextUsed} cases referenced</span>
+                      )}
                     </div>
                   </div>
                   {message.sender === 'user' && (
@@ -175,8 +246,12 @@ const Chatbot = () => {
           </div>
 
           {/* Disclaimer */}
-          <div className="text-xs text-muted-foreground text-center mt-4">
-            ⚠️ This is a demo chatbot. For actual medical emergencies, please contact your local healthcare provider or emergency services.
+          <div className="text-xs text-muted-foreground text-center mt-4 space-y-1">
+            <div>⚠️ <strong>Medical Disclaimer:</strong> This AI assistant provides general health information only.</div>
+            <div>For medical emergencies, call emergency services. Always consult healthcare professionals for medical advice.</div>
+            {sessionId && (
+              <div className="text-primary">✅ Connected to AI Medical Assistant</div>
+            )}
           </div>
         </div>
       </main>
