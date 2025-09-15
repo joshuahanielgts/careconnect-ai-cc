@@ -21,23 +21,23 @@ Healthcare-focused with trust-building blues and medical greens
     --popover: 0 0% 100%;
     --popover-foreground: 225 15% 20%;
 
-    /* Healthcare primary - Medical Blue */
-    --primary: 217 91% 60%;
+    /* Primary - Modern Purple */
+    --primary: 262 83% 58%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 217 91% 70%;
-    --primary-dark: 217 91% 50%;
+    --primary-light: 262 83% 68%;
+    --primary-dark: 262 83% 48%;
 
-    /* Healthcare secondary - Medical Green */
-    --secondary: 158 64% 52%;
+    /* Secondary - Teal Accent */
+    --secondary: 178 85% 40%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-light: 158 64% 62%;
-    --secondary-dark: 158 64% 42%;
+    --secondary-light: 178 85% 50%;
+    --secondary-dark: 178 85% 30%;
 
     /* Trust building colors */
-    --trust-blue: 221 83% 53%;
-    --trust-green: 142 76% 36%;
-    --accent-blue: 213 94% 68%;
-    --accent-green: 150 100% 45%;
+    --trust-blue: 262 83% 58%;
+    --trust-green: 178 85% 40%;
+    --accent-blue: 262 83% 68%;
+    --accent-green: 178 85% 50%;
 
     /* Neutral system */
     --muted: 220 14% 96%;
@@ -45,12 +45,12 @@ Healthcare-focused with trust-building blues and medical greens
     --muted-dark: 220 13% 91%;
 
     /* Interactive states */
-    --accent: 217 91% 60%;
+    --accent: 262 83% 58%;
     --accent-foreground: 0 0% 100%;
-    --accent-hover: 217 91% 55%;
+    --accent-hover: 262 83% 63%;
 
     /* Feedback colors */
-    --success: 142 76% 36%;
+    --success: 178 85% 40%;
     --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
@@ -60,14 +60,14 @@ Healthcare-focused with trust-building blues and medical greens
     /* Border and input */
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 217 91% 60%;
+    --ring: 262 83% 58%;
 
     /* Layout */
     --radius: 0.75rem;
     --radius-sm: 0.5rem;
     --radius-lg: 1rem;
 
-    /* Healthcare gradients */
+    /* Modern gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent-blue)) 100%);
     --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--accent-green)) 100%);
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
@@ -112,23 +112,23 @@ Healthcare-focused with trust-building blues and medical greens
     --popover: 225 25% 10%;
     --popover-foreground: 0 0% 95%;
 
-    /* Healthcare primary - brighter in dark */
-    --primary: 217 91% 65%;
+    /* Primary - brighter in dark */
+    --primary: 262 83% 68%;
     --primary-foreground: 225 25% 8%;
-    --primary-light: 217 91% 75%;
-    --primary-dark: 217 91% 55%;
+    --primary-light: 262 83% 78%;
+    --primary-dark: 262 83% 58%;
 
-    /* Healthcare secondary - brighter in dark */
-    --secondary: 158 64% 57%;
+    /* Secondary - brighter in dark */
+    --secondary: 178 85% 50%;
     --secondary-foreground: 225 25% 8%;
-    --secondary-light: 158 64% 67%;
-    --secondary-dark: 158 64% 47%;
+    --secondary-light: 178 85% 60%;
+    --secondary-dark: 178 85% 40%;
 
     /* Trust colors - adjusted for dark */
-    --trust-blue: 221 83% 60%;
-    --trust-green: 142 76% 45%;
-    --accent-blue: 213 94% 75%;
-    --accent-green: 150 100% 55%;
+    --trust-blue: 262 83% 68%;
+    --trust-green: 178 85% 50%;
+    --accent-blue: 262 83% 78%;
+    --accent-green: 178 85% 60%;
 
     /* Neutral system - dark mode */
     --muted: 225 25% 15%;
@@ -136,19 +136,19 @@ Healthcare-focused with trust-building blues and medical greens
     --muted-dark: 225 25% 12%;
 
     /* Interactive states - dark mode */
-    --accent: 217 91% 65%;
+    --accent: 262 83% 68%;
     --accent-foreground: 225 25% 8%;
-    --accent-hover: 217 91% 70%;
+    --accent-hover: 262 83% 73%;
 
     /* Feedback colors - dark mode */
-    --success: 142 76% 45%;
+    --success: 178 85% 50%;
     --warning: 38 92% 55%;
     --destructive: 0 84.2% 65%;
 
     /* Border and input - dark mode */
     --border: 225 25% 20%;
     --input: 225 25% 15%;
-    --ring: 217 91% 65%;
+    --ring: 262 83% 68%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -168,6 +168,10 @@ Healthcare-focused with trust-building blues and medical greens
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   /* Healthcare-specific animations */
@@ -230,13 +234,29 @@ Healthcare-focused with trust-building blues and medical greens
     animation: pulse-gentle 2s ease-in-out infinite;
   }
 
-  /* Healthcare component styles */
+  /* Modern glass component styles */
+  .glass-card {
+    @apply bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-[var(--radius-lg)] shadow-[var(--shadow-card)] transition-all duration-300;
+  }
+
+  .glass-card:hover {
+    @apply bg-white/15 dark:bg-white/10 shadow-[var(--shadow-elevated)] transform translate-y-[-2px];
+  }
+
+  .glass-header {
+    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-white/20 dark:border-white/10;
+  }
+
+  .glass-button {
+    @apply bg-white/20 dark:bg-white/10 backdrop-blur-xl border border-white/30 dark:border-white/20 hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300;
+  }
+
   .healthcare-card {
-    @apply bg-card border border-border rounded-[var(--radius)] shadow-[var(--shadow-card)] transition-all duration-300;
+    @apply glass-card;
   }
 
   .healthcare-card:hover {
-    @apply shadow-[var(--shadow-elevated)] transform translate-y-[-2px];
+    @apply bg-white/15 dark:bg-white/10 shadow-[var(--shadow-elevated)] transform translate-y-[-2px];
   }
 
   .healthcare-gradient-text {
