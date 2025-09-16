@@ -8,6 +8,7 @@ import {
   Brain, 
   Database 
 } from "lucide-react"
+import { FeatureDialog } from "@/components/ui/feature-dialog"
 
 const FeaturesGrid = () => {
   const features = [
@@ -92,27 +93,28 @@ const FeaturesGrid = () => {
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {features.map((feature, index) => (
-            <div
-              key={index}
-              className="healthcare-card p-6 group hover:shadow-feature transition-all duration-300 animate-scale-in"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              {/* Icon */}
-              <div className={`w-14 h-14 ${getIconBg(feature.color)} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                <feature.icon className="w-7 h-7 text-white" />
+            <FeatureDialog key={index} feature={feature}>
+              <div
+                className="glassmorphism-feature p-6 group cursor-pointer animate-scale-in"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {/* Icon */}
+                <div className={`w-14 h-14 ${getIconBg(feature.color)} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  <feature.icon className="w-7 h-7 text-white" />
+                </div>
+
+                {/* Content */}
+                <h3 className="text-lg font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
+                  {feature.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {feature.description}
+                </p>
+
+                {/* Hover indicator */}
+                <div className="mt-4 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300" />
               </div>
-
-              {/* Content */}
-              <h3 className="text-lg font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
-                {feature.title}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                {feature.description}
-              </p>
-
-              {/* Hover indicator */}
-              <div className="mt-4 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300" />
-            </div>
+            </FeatureDialog>
           ))}
         </div>
 

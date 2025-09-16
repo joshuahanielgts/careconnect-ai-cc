@@ -2,6 +2,7 @@ import { Menu, X, Heart, Shield, Phone } from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { HeroButton } from "@/components/ui/hero-button"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -54,6 +55,7 @@ const Header = () => {
                 Try Chatbot
               </HeroButton>
             </Link>
+            <ThemeToggle />
           </div>
 
           {/* Mobile menu button */}

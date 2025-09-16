@@ -82,6 +82,30 @@ Healthcare-focused with trust-building blues and medical greens
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
+    /* Enhanced Glassmorphism Effects */
+    --glass-background: hsla(var(--background) / 0.75);
+    --glass-background-strong: hsla(var(--background) / 0.9);
+    --glass-border: hsla(var(--border) / 0.25);
+    --glass-shadow: 0 8px 32px hsla(var(--primary) / 0.15);
+    --glass-blur: blur(16px);
+    
+    /* Header glassmorphism */
+    --header-glass: hsla(var(--background) / 0.8);
+    --header-border: hsla(var(--border) / 0.2);
+    --header-shadow: 0 4px 24px hsla(var(--foreground) / 0.08);
+    
+    /* Card glassmorphism */
+    --card-glass: hsla(var(--card) / 0.7);
+    --card-glass-hover: hsla(var(--card) / 0.85);
+    --card-border: hsla(var(--border) / 0.3);
+    --card-shadow: 0 8px 32px hsla(var(--primary) / 0.1);
+    
+    /* Feature card glassmorphism */
+    --feature-glass: hsla(var(--card) / 0.6);
+    --feature-glass-hover: hsla(var(--card) / 0.8);
+    --feature-border: hsla(var(--primary) / 0.2);
+    --feature-shadow: 0 12px 40px hsla(var(--primary) / 0.15);
+
     --sidebar-background: 0 0% 98%;
 
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -167,7 +191,7 @@ Healthcare-focused with trust-building blues and medical greens
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
   }
 
   html {
@@ -234,29 +258,58 @@ Healthcare-focused with trust-building blues and medical greens
     animation: pulse-gentle 2s ease-in-out infinite;
   }
 
-  /* Modern glass component styles */
-  .glass-card {
-    @apply bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-[var(--radius-lg)] shadow-[var(--shadow-card)] transition-all duration-300;
+  /* Enhanced Glassmorphism utility classes */
+  .glassmorphism {
+    @apply bg-white/10 dark:bg-white/5 backdrop-blur-2xl border border-white/20 dark:border-white/10 rounded-[var(--radius-lg)] shadow-[var(--shadow-card)] transition-all duration-300;
   }
 
-  .glass-card:hover {
-    @apply bg-white/15 dark:bg-white/10 shadow-[var(--shadow-elevated)] transform translate-y-[-2px];
+  .glassmorphism-strong {
+    @apply bg-white/20 dark:bg-white/20 backdrop-blur-2xl border border-white/25 dark:border-white/20 rounded-[var(--radius-lg)] shadow-[var(--shadow-elevated)];
+  }
+
+  .glassmorphism-header {
+    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-2xl border-b border-white/20 dark:border-white/10;
+  }
+
+  .glassmorphism-card {
+    @apply bg-white/5 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-[var(--radius-lg)] shadow-[var(--shadow-card)] transition-all duration-300;
+  }
+
+  .glassmorphism-card:hover {
+    @apply bg-white/20 dark:bg-white/10 shadow-[var(--shadow-elevated)] transform translate-y-[-2px] scale-[1.01];
+  }
+
+  .glassmorphism-feature {
+    @apply bg-white/5 dark:bg-white/5 backdrop-blur-xl border border-white/10 dark:border-white/10 rounded-[var(--radius-lg)] shadow-[var(--shadow-card)] transition-all duration-300;
+  }
+
+  .glassmorphism-feature:hover {
+    @apply bg-white/20 dark:bg-white/10 shadow-[var(--shadow-elevated)] transform translate-y-[-4px] scale-[1.02] border-primary/20;
+  }
+
+  .glassmorphism-button {
+    @apply bg-white/10 dark:bg-white/10 backdrop-blur-xl border border-white/20 dark:border-white/20 hover:bg-white/20 dark:hover:bg-white/20 transition-all duration-300;
+  }
+
+  .glassmorphism-button:hover {
+    @apply shadow-[var(--shadow-card)] border-primary/30;
+  }
+
+  /* Glass component styles for compatibility */
+  .glass-card {
+    @apply glassmorphism-card;
   }
 
   .glass-header {
-    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-white/20 dark:border-white/10;
+    @apply glassmorphism-header;
   }
 
   .glass-button {
-    @apply bg-white/20 dark:bg-white/10 backdrop-blur-xl border border-white/30 dark:border-white/20 hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300;
+    @apply glassmorphism-button;
   }
 
   .healthcare-card {
-    @apply glass-card;
-  }
-
-  .healthcare-card:hover {
-    @apply bg-white/15 dark:bg-white/10 shadow-[var(--shadow-elevated)] transform translate-y-[-2px];
+    @apply glassmorphism-feature;
   }
 
   .healthcare-gradient-text {
