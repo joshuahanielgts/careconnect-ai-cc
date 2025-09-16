@@ -9,8 +9,10 @@ import {
   Database 
 } from "lucide-react"
 import { FeatureDialog } from "@/components/ui/feature-dialog"
+import { useNavigate } from "react-router-dom"
 
 const FeaturesGrid = () => {
+  const navigate = useNavigate()
   const features = [
     {
       icon: Globe,
@@ -128,7 +130,10 @@ const FeaturesGrid = () => {
               Join millions of Indians who are already using CareConnect AI for their healthcare needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="healthcare-button-primary">
+              <button 
+                onClick={() => navigate('/chatbot')}
+                className="healthcare-button-primary shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              >
                 Try All Features Free
               </button>
               <button className="px-6 py-3 border border-primary text-primary rounded-lg font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-300">
