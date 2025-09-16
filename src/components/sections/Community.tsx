@@ -122,8 +122,8 @@ const Community = () => {
         {/* Government Compliance Section */}
         <div className="mt-20 bg-gradient-subtle p-8 rounded-2xl animate-scale-in">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-foreground mb-4">Government Compliance & Trust</h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold text-primary mb-4">Government Compliance & Trust</h3>
+            <p className="text-primary/80 max-w-2xl mx-auto">
               CareConnect AI meets all regulatory requirements and security standards set by the Government of India
             </p>
           </div>
