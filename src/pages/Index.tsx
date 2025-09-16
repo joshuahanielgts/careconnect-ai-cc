@@ -22,10 +22,8 @@ const Index = () => {
         <ImpactSection />
         <HowItWorks />
         <section className="py-12 bg-gradient-subtle">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md mx-auto">
-              <DataInitializer />
-            </div>
+          <div className="max-w-md mx-auto">
+            <DataInitializer />
           </div>
         </section>
         <ChatDemo />
