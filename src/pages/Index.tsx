@@ -21,11 +21,6 @@ const Index = () => {
         <FeaturesGrid />
         <ImpactSection />
         <HowItWorks />
-        <section className="py-12 bg-gradient-subtle">
-          <div className="max-w-md mx-auto">
-            <DataInitializer />
-          </div>
-        </section>
         <ChatDemo />
         <Community />
         <Testimonials />
